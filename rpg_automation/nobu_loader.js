@@ -123,8 +123,7 @@ var helpother = 8;
 
 var shamo_special = "3Fidqd%3D10003%26u%";
 var shamo_delay = 60000;
-// for 10 minutes adventure.
-shamo_delay = shamo_delay * 50;
+shamo_delay = shamo_delay * 1;
 
 var getURL = function(type)
 {
@@ -186,6 +185,7 @@ var mylog = function(content)
 	window.console.log(Date() + ": " + content);
 }
 
+/*
 var createAttackList = function()
 {
 	attack_list = new Array();
@@ -195,6 +195,18 @@ var createAttackList = function()
 	addCommand(attack_list, do_start_shamo2, common_delay * 2);
 	addCommand(attack_list, do_ask_help, common_delay);
 	addCommand(attack_list, do_ask_help_confirm, shamo_delay - 2 * common_delay);
+	addCommand(attack_list, do_finish_shamo, common_delay);
+	addCommand(attack_list, do_finish_shamo2, 0);
+	addCommand(attack_list, do_complete_attack, common_delay);
+}
+*/
+
+var createAttackList = function()
+{
+	attack_list = new Array();
+	addCommand(attack_list, do_go_shamo_quest, common_delay);
+	addCommand(attack_list, do_submit_shamo_form, common_delay);
+	addCommand(attack_list, do_start_shamo2, shamo_delay);
 	addCommand(attack_list, do_finish_shamo, common_delay);
 	addCommand(attack_list, do_finish_shamo2, 0);
 	addCommand(attack_list, do_complete_attack, common_delay);
@@ -240,17 +252,15 @@ var findQuestPlayUrl = function() {
 	return a;
 }
 
+var do_go_shamo_quest = function()
+{
+	gotoURL(shamo);
+ 	mylog("1: do_go_shamo_quest");
+}
+
 var do_go_quest = function()
 {
-	if (true)
-	{
-		//gotoURL(quest);
-		gotoRealURL(findQuestPlayUrl());
-	}
-	else
-	{
-		gotoURL(shamo);
-	}
+	gotoRealURL(findQuestPlayUrl());
  	mylog("1: do_go_quest");
 }
 
