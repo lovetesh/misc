@@ -124,7 +124,7 @@ var helpother = 8;
 var shamo_special = "3Fidqd%3D10003%26u%";
 var shamo_delay = 60000;
 // for 10 minutes adventure.
-shamo_delay = shamo_delay * 50;
+shamo_delay = shamo_delay * 70;
 
 var getURL = function(type)
 {
@@ -300,7 +300,7 @@ var do_complete_attack = function()
 {
 	battleCounter++;
 	var nextlist = attack_list;
-	if (battleCounter > 6)
+	if (battleCounter > 3)
 	{
 		if (need_forge)
 		{
