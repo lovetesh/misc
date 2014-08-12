@@ -1,3 +1,25 @@
+var frameWindow = window;
+var gpAjax = window.gpAjax;
+
+var createGame = function() {
+	var frame = document.getElementById("game");
+	if (frame)
+		frame.remove();
+
+	frame = document.createElement('iframe');
+	frame.width = 1024;
+	frame.height = 800;
+	frame.id = "game";
+	frame.frameborder = '0';
+	frame.scrolling = 'no';
+	frame.src = 'http://en79.grepolis.com';
+	frame.sandbox = "allow-same-origin allow-scripts allow-forms";
+	document.body.appendChild(frame);	
+
+	var result = document.getElementById("game");
+	frameWindow = frame.contentWindow;
+	return result;
+};
 
 function myAjaxPost(type, action, params, cb, cb2)
 {
@@ -34,6 +56,20 @@ function myAjaxGet(type, action, params, cb)
 	}
 	gpAjax.ajaxGet(type, action, params, false, callback);
 }
+
+function linkData()
+{
+	gpAjax = frameWindow.gpAjax;
+	frameWindow.NotificationLoader.oldRecvData = frameWindow.NotificationLoader.recvNotifyData;
+
+	frameWindow.NotificationLoader.recvNotifyData= function(data, inited)
+	{
+		console.log(data);
+		frameWindow.NotificationLoader.oldRecvData(data, inited);
+	}
+}
+
+
 
 var famingtime = 300;
 
@@ -85,6 +121,10 @@ function doStartRun()
 	{
 		return;
 	}
+	blacklist = document.getElementById("blacklist").value.split(",");
+	famingtime = parseInt(document.getElementById("farmingTime").value);
+
+
 	console.log("doStartRun");
 	townIndex = 0;
 	isGettingInfo = true;
@@ -100,6 +140,14 @@ function doRun()
 	setTimeout(dodoRun, getRequestIntervalTime());
 }
 
+function lootLoopEneded()
+{
+	// switch to other action list.	
+	timeoutid = setTimeout(doStartRun, getTimeoutTime());
+	console.log("successful one turn.");
+	// switch to build.
+}
+
 function dodoRun()
 {
 	if (alltowns == null)
@@ -110,8 +158,7 @@ function dodoRun()
 	{
 		if (townIndex >= alltowns.length)
 		{
-			timeoutid = setTimeout(doStartRun, getTimeoutTime());
-			console.log("successful one turn.");
+			lootLoopEneded();
 		}
 		else
 		{
@@ -232,3 +279,35 @@ function doLootTown(cur_town_idx)
 			}
 	});
 }
+
+function hasFreeBuildingSlots()
+{
+	return frameWindow.MM.collections.BuildingOrder[1].length < 7;
+}
+
+priorityList = ["buildHigh", "buildLow", "recruitHigh", "recruitLow"];
+// buildHigh is to build important.
+// buildLow is to use resources.
+// recruitHigh is to use all resources but the recruit time must less than 4 hours.
+// recruitLow is to use resources > half of current storage.
+// send to balance resources.
+
+// Every city need their own configs for buildings and recuitment.
+
+// LS, Birs, Hoplite, slinger, horse, land defenses.
+
+function doImportant()
+{
+
+}
+
+function BuildOnce()
+{
+
+}
+
+// List all want to do and give priority.
+// 
+
+
+
