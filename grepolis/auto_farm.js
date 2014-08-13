@@ -8,11 +8,11 @@ var createGame = function() {
 
 	frame = document.createElement('iframe');
 	frame.width = 1024;
-	frame.height = 800;
+	frame.height = 600;
 	frame.id = "game";
 	frame.frameborder = '0';
 	frame.scrolling = 'no';
-	frame.src = 'http://en79.grepolis.com';
+	frame.src = 'http://en80.grepolis.com';
 	frame.sandbox = "allow-same-origin allow-scripts allow-forms";
 	document.body.appendChild(frame);	
 
@@ -62,14 +62,35 @@ function linkData()
 	gpAjax = frameWindow.gpAjax;
 	frameWindow.NotificationLoader.oldRecvData = frameWindow.NotificationLoader.recvNotifyData;
 
-	frameWindow.NotificationLoader.recvNotifyData= function(data, inited)
+	frameWindow.NotificationLoader.recvNotifyData = function(data, inited)
 	{
 		console.log(data);
+		if (data.notifications != null)
+		{
+			for (var i = 0; i < data.notifications.length; i++)
+			{
+				handleNotification(data.notifications[i]);
+			}
+		}
 		frameWindow.NotificationLoader.oldRecvData(data, inited);
 	}
 }
 
+var botcheckAudio = new Audio('botcheck.mp3');
+var attackAudio = new Audio('attack.wav');
+var testAudio = new Audio('test.wav');
 
+function handleNotification(n)
+{
+	if (n.type == frameWindow.NotificationType.INCOMING_ATTACK)
+	{
+		attackAudio.play();
+	}
+	else if (n.type == frameWindow.NotificationType.BOTCHECK)
+	{
+		botcheckAudio.play();
+	}
+}
 
 var famingtime = 300;
 
@@ -332,7 +353,7 @@ var farminfoStage = 0;
 var farmStage = 1;
 var lootinfoStage = 2;
 var lootStage = 3;
-var townlist = [16014];
+var townlist = [65,67,68,69,70];
 
 function doRunNoCaptain()
 {
