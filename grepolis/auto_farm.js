@@ -59,6 +59,10 @@ function myAjaxGet(type, action, params, cb)
 
 function linkData()
 {
+	if (frameWindow.NotificationLoader.oldRecvData != null)
+	{
+		return;
+	}
 	gpAjax = frameWindow.gpAjax;
 	frameWindow.NotificationLoader.oldRecvData = frameWindow.NotificationLoader.recvNotifyData;
 
@@ -109,8 +113,8 @@ var autoBuild = false;
 
 function getTimeoutTime()
 {
-	var hasCaptain = parseInt(document.getElementById("hasCaptain").value);
-	if (hasCaptain == 0)
+	var hasCaptain = document.getElementById("hasCaptain").checked;
+	if (!hasCaptain)
 	{
 		return famingtime * 1000;
 	}
@@ -142,8 +146,8 @@ function doGetRecruitInfoAndRecruit()
 
 function doGetBuidingInfoAndBuild()
 {
-	var autoBuild = parseInt(document.getElementById("autoBuild").value);
-	if (autoBuild == 0)
+	var autoBuild = document.getElementById("autoBuild").checked;
+	if (!autoBuild)
 	{
 		return;
 	}
@@ -267,6 +271,10 @@ function buildOneFromList(townId, buildingList, building_data)
 {
 	var data = building_data[townId];
 	var towndata = frameWindow.ITowns.towns[townId];
+	if (frameWindow.ITowns.towns[157].buildingOrders().length == 7)
+	{
+		return;
+	}
 	if (towndata[0] == "n")
 	{
 		return false;
@@ -345,8 +353,8 @@ function doStartRun()
 	townIndex = 0;
 	isGettingInfo = true;
 	lootmoodvalue = parseInt(document.getElementById("lootMoral").value);
-	var hasCaptain = parseInt(document.getElementById("hasCaptain").value);
-	if (hasCaptain != 0)
+	var hasCaptain = document.getElementById("hasCaptain").checked;
+	if (hasCaptain)
 	{
 		doRun();
 	}
@@ -365,7 +373,7 @@ function doRun()
 	setTimeout(dodoRun, getRequestIntervalTime());
 }
 
-function lootLoopEneded()
+function lootLoopEnded()
 {
 	// switch to other action list.	
 	doCheckStatusAndDoSomething();
@@ -384,7 +392,7 @@ function dodoRun()
 	{
 		if (townIndex >= alltowns.length)
 		{
-			lootLoopEneded();
+			lootLoopEnded();
 		}
 		else
 		{
@@ -583,6 +591,7 @@ function reallyDo()
 	if (townindex >= townlist.length)
 	{
 		console.log("successfully complete a loop.");
+		doCheckStatusAndDoSomething();
 		timeoutid = setTimeout(doStartRun, getTimeoutTime());
 	}
 	else
