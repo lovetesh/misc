@@ -315,6 +315,7 @@ var buildTowns = [];
 function buildLoopEnded()
 {
 	console.log("buildLoop ended, do nothing, you can switch to recruit process.");
+	doGetRecruitInfoAndRecruit();
 }
 
 function startBuildLoop(building_data)
@@ -418,7 +419,7 @@ function buildOneFromList(townId, buildingList, building_data)
 {
 	var data = building_data[townId];
 	var towndata = frameWindow.ITowns.towns[townId];
-	if (frameWindow.ITowns.towns[157].buildingOrders().length == 7)
+	if (frameWindow.ITowns.towns[townId].buildingOrders().length == 7)
 	{
 		return;
 	}
