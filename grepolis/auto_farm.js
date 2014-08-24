@@ -216,7 +216,7 @@ function getAllowedRecruitNumber(data, i)
 	{
 		allowed = resources.wood / consumes.wood;
 	}
-	if (allowed > 40 / population)
+	if (allowed >= 40 / population)
 	{
 		return 20 / population;
 	}
@@ -283,7 +283,7 @@ function tryRecruitFromOverview(data, i)
 		    	console.log(unit.id + " has been recruited.");
 		    	doRecruitLoop(g_recruitTowns);
 	    	});
-	    	return true;
+	return true;
 }
 
 function recruitLoopEnded(data)
