@@ -1,20 +1,33 @@
 <head>
 	<meta http-equiv = "Content-Type" content = "text/html; charset=utf-8">
 	<script type="text/javascript" language="javascript" src="auto_farm.js"></script>
+	<script type="text/javascript" language="javascript" src="auto_build.js"></script>
+	<script type="text/javascript" language="javascript" src="auto_recruit.js"></script>
+	<script type="text/javascript" language="javascript" src="base.js"></script>
+	<script type="text/javascript" language="javascript" src="farm_no_captain.js"></script>
+	<script type="text/javascript" language="javascript" src="farmWithCaptain.js"></script>
 </head>
 <body>
 	</div>
 		<span><button type = "button" onclick = "javascript:(createGame())">Create</button></span>
-		<span><button type = "button" onclick = "javascript:(linkData())">LinkData</button></span>
-		<span><button type = "button" onclick = "javascript:(startLoop())">Start</button></span>
+		<span><button type = "button" onclick = "javascript:(startFromLoader())">Start</button></span>
 		<span><button type = "button" onclick = "javascript:(stopLoop())">Stop</button></span>
-		<span><button type = "button" onclick = "javascript:(test())">Test</button></span>
-		<span><button type = "button" onclick = "javascript:(BuildOnce())">BuildOnce</button></span>
 	</div>
 	<div>
 		<span>blacklist: </span><span><input id = "blacklist" value="" style="width:40px"></span>
-		<span>farmingTime: </span><span><input id = "farmingTime" value="300" style="width:40px"></span>
-		<span>hasCaptain: </span><span><input id = "hasCaptain" type = "checkbox" style="width:40px"></span>
+		<span>farmingTime: </span><span>
+		<select id = "farmingTime" name="farmingTime" style="width:70px">
+		<option value="300">300</option>
+		<option value="600">600</option>
+		<option value="1200">1200</option>
+		<option value="2400">2400</option>
+		<option value="300">5400</option>
+		<option value="600">10800</option>
+		<option value="1200">14400</option>
+		<option value="2400">28800</option>
+		</select>
+		</span>
+		<span>hasCaptain: </span><span><input id = "hasCaptain" type = "checkbox" checked="checked" style="width:40px"></span>
 		<span>lootMoral: </span><span><input id = "lootMoral" value="80" style="width:40px"></span>
 		<span>autoBuild: </span><span><input id = "autoBuild" type = "checkbox" style="width:40px"></span>
 		<span>autoRecruit: </span><span><input id = "autoRecruit" type = "checkbox" style="width:40px"></span>
