@@ -80,10 +80,6 @@ function swapH(rl, a, b)
 function doTryRecruit(start, end, data, type)
 {
 	l = [];
-	if (data.free_population < 160)
-	{
-		return false;
-	}
 
 	resource_list = [['wood', data.resources.wood], ['stone', data.resources.stone], ['iron', data.resources.iron]];
 	if (resource_list[0][1] < resource_list[1][1])
@@ -120,7 +116,13 @@ function doTryRecruit(start, end, data, type)
 		+ ((townInfo.unitsOuter().archer != null) ? townInfo.unitsOuter().archer : 0)
 		+ data.orders.barracks.length * 30;
 
-	console.log("totalDef = " + totalDef  + ", totalLight = " + totalLight + ", type = " + type);
+	console.log("town name:" + townInfo.name + ",left pop:" + data.free_population + 
+		",totalDef:" + totalDef  + ",totalLight:" + totalLight + ",type:" + type);
+
+	if (data.free_population < 160)
+	{
+		return false;
+	}
 
 	if (type == 'a')
 	{
@@ -134,7 +136,7 @@ function doTryRecruit(start, end, data, type)
 		}
 		else 
 		{
-			l = ['attack_ship', 'rider', 'slinger'];
+			l = ['hoplite', 'rider', 'slinger'];
 		}
 		if (totalLight < 80)
 		{
@@ -180,9 +182,10 @@ function doTryRecruit(start, end, data, type)
 	{
 		l = ['rider'];
 	}
+	console.log(l);
 	for (var id in l)
 	{
-		for (var i = start; i < end; i++)
+		for (var i = start; i <= end; i++)
 		{
 			if (!data.units[i].dep)
 			{
@@ -194,6 +197,7 @@ function doTryRecruit(start, end, data, type)
 				{
 					return true;
 				}
+				break;
 			}
 		}
 	}

@@ -74,7 +74,7 @@ function tryBuildFromOverview(townId, building_data)
 	// medium
 	buildingList = {'main' : 24,
 						'farm' : 30, 
-						'storage' : 22, 
+						'storage' : 23, 
 						'academy' : 30, 
 						'docks' : 20, 
 						'market' : 10, 
