@@ -75,6 +75,32 @@ function doGetAllTowns()
 		});
 }
 
+function allowLoot(townId)
+{
+	var towndata = frameWindow.ITowns.towns[townId];
+	var name = towndata.name;
+	var typemap = {"0001": 'y',
+				   "0002": 'y',
+				   "0003": 'y',
+				   "0004": 'y',
+				   "0005": 'y',
+				   "0006": 'y',
+				   "0007": 'y',
+				   "0008": 'y',
+				   "0009": 'y',
+				   "0010": 'y',
+				   "0011": 'y',
+				   '0012': 'y',
+				   '0013': 'y'
+	};
+	var type = typemap[name.substr(0, 4)];
+	if (type == null)
+	{
+		return false;
+	}
+	return true;
+}
+
 function doLootTown(cur_town_idx)
 {
 	console.log("doLootTown" + cur_town_idx);
@@ -83,23 +109,21 @@ function doLootTown(cur_town_idx)
 	var farm_town_list = towninfo.farm_town_list;
 	var townlist = [];
 
-	console.log(farm_town_list.length);
+	if (!allowLoot(towninfo.id))
+	{
+		console.log("Disable the loot town:" + towninfo.id);
+		doRun();
+		return;
+	}
 
 	for (var i = 0; i < farm_town_list.length; i++)
 	{
 		var farm_town = farm_town_list[i];
+		// here must be a bug.
+		console.log("farm_town.loot = " + farm_town.loot);
 		if (farm_town.loot != null && farm_town.loot < (Date.now() / 1000))
 		{
 			townlist.push(farm_town.id);
-		}
-	}
-
-	for (var i = 0; i < blacklist.length; i++)
-	{
-		if (towninfo.id == blacklist[i])
-		{
-			doRun();
-			return;
 		}
 	}
 

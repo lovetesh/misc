@@ -23,13 +23,37 @@ function startRecruit()
 	doRecruitLoop(g_recruitTowns);
 }
 
+function typeFromName(name)
+{
+	var typemap = {"0001": 'n',
+				   "0002": 'a',
+				   "0003": 'a',
+				   "0004": 'a',
+				   "0005": 'b',
+				   "0006": 'b',
+				   "0007": 'b',
+				   "0008": 'b',
+				   "0009": 'l',
+				   "0010": 'b',
+				   "0011": 'a',
+				   '0012': 'b',
+				   '0013': 'l'
+	};
+	var type = typemap[name.substr(0, 4)];
+	if (type == null)
+	{
+		return 'n';
+	}
+	return type;
+}
+
 function doRecruitLoop(recruit_towns)
 {
 	if (recruitTownIndex < recruit_towns.length)
 	{
 		var data = recruit_towns[recruitTownIndex];
 		recruitTownIndex++;
-		tryRecruit(data, data.name[0]);
+		tryRecruit(data, typeFromName(data.name));
 	}
 	else
 	{
@@ -65,7 +89,7 @@ function getAllowedRecruitNumber(data, i)
 	console.log("unit = " + data.units[i].id + " allowed = " + allowed);
 	if (allowed >= 50 / population)
 	{
-		return 30 / population;
+		return parseInt(32 / population);
 	}
 	return 0;
 }
@@ -178,7 +202,7 @@ function doTryRecruit(start, end, data, type)
 	{
 		l = ['slinger'];
 	}
-	else if (type = 'r')
+	else if (type == 'r')
 	{
 		l = ['rider'];
 	}
@@ -236,6 +260,7 @@ function tryRecruitFromOverview(data, i)
 	var towns = {};
 	towns[data.id] = {};
 	towns[data.id][unit.id] = num;
+	console.log(towns);
 	var params = {
 			"town_id":data.id,
 			"towns": towns

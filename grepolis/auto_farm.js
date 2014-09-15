@@ -37,14 +37,42 @@ function recruitLoopEnded()
 
 }
 
+function cultureLoopEnded()
+{
+	console.log("cultureloop ended.");
+	doGetBuidingInfoAndBuild();
+}
+
+// for auto farm. need sort the city and loot the city with less counter first.
+
+// for culture. do all city festival every time. (do a city info to know whether need one)
+
+// for cave. only nearly full. save 2000. (loop)
+
+// for trade. must record all the current running market info.
+// need record all the trading info. from time, end time, from city, end city and update info for every updates.
+// Do more things by the info.
+
+// auto favor monster recruiting.
+
+// for auto battle.
+// 1. auto search map. get map info, island info and city info.
+// 2. make city table(save/load from file).
+// 3. get city info and switch to city. start attacking. (mainly for favor.) // need to test whether the player is dead one.
+// 4. gerpolis intel the city and gain information. (gather the message in 1 and update infomration later.)
+// 5. get the dead city and attack it.
+// 6. get the bp city and attack it.
+// 7. get report information and update the table.
+
 function buildLoopEnded()
 {
-	console.log("buildLoop ended, do nothing, you can switch to recruit process.");
+	console.log("buildLoop ended.");
 	doGetRecruitInfoAndRecruit();
 }
 
 function doCheckStatusAndDoSomething()
 {
+	/*
 	// first get current wareh"ouse information."
 	var buildingOrders = frameWindow.ITowns.getCurrentTown().buildingOrders();
 	var orderedNum = buildingOrders.models.length;
@@ -57,6 +85,8 @@ function doCheckStatusAndDoSomething()
 	{
 		doGetBuidingInfoAndBuild();
 	}
+	*/
+	doCuture();
 }
 
 function startFromLoader()

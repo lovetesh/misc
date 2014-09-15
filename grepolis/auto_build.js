@@ -50,6 +50,12 @@ function doBuildLoop(building_data)
 
 function tryBuildFromOverview(townId, building_data)
 {
+	var towndata = frameWindow.ITowns.towns[townId];
+	if (towndata.name[0] == "n")
+	{
+		doBuildLoop(building_data);
+		return;
+	}
 	console.log("try build " + townId);
 	var data = building_data[townId];
 	// low
@@ -64,7 +70,7 @@ function tryBuildFromOverview(townId, building_data)
 						'market' : 10, 
 						'temple' : 5, 
 						'hide' : 1, 
-						'wall' : 5, 
+						'wall' : 1, 
 						'barracks' : 10
 					};
 	if (buildOneFromList(townId, buildingList, building_data))
@@ -80,7 +86,7 @@ function tryBuildFromOverview(townId, building_data)
 						'market' : 10, 
 						'temple' : 5, 
 						'hide' : 10, 
-						'wall' : 10, 
+						'wall' : 1, 
 						'lumber' : 20,
 						'ironer' : 20, 
 						'stoner' : 20, 
@@ -97,9 +103,9 @@ function tryBuildFromOverview(townId, building_data)
 						'storage' : 99, 
 						'academy' : 99, 
 						'docks' : 20, 
-						'temple' : 10, 
 						'hide' : 10, 
-						'wall' : 20, 
+						'temple' : 15, 
+						'wall' : 1, 
 						'lumber' : 99,
 						'ironer' : 99, 
 						'stoner' : 99,
@@ -120,10 +126,6 @@ function buildOneFromList(townId, buildingList, building_data)
 	if (frameWindow.ITowns.towns[townId].buildingOrders().length == 7)
 	{
 		return;
-	}
-	if (towndata[0] == "n")
-	{
-		return false;
 	}
 	for (var key in buildingList)
 	{
