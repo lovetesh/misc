@@ -43,6 +43,13 @@ function cultureLoopEnded()
 	doGetBuidingInfoAndBuild();
 }
 
+
+// Need add auto_cave and auto_trade
+
+// auto_trade: For every city, if resource is too much. send to other city (1. culture needed city. 2. resource needed city.) 
+// if need not culture(culture 1 hour away) and pop is not enough(< 200). And resource > base value(10000), send to other culture city.
+// auto_cave: When the silver > 18000 and need not trade to other people. send 3000 silver in cave.
+
 // for auto farm. need sort the city and loot the city with less counter first.
 
 // for culture. do all city festival every time. (do a city info to know whether need one)
@@ -72,21 +79,7 @@ function buildLoopEnded()
 
 function doCheckStatusAndDoSomething()
 {
-	/*
-	// first get current wareh"ouse information."
-	var buildingOrders = frameWindow.ITowns.getCurrentTown().buildingOrders();
-	var orderedNum = buildingOrders.models.length;
-	var currentResources = frameWindow.ITowns.getCurrentTown().getCurrentResources();
-	var storage = frameWindow.ITowns.getCurrentTown().getStorage();
-	// decide whether the resources is too much.
-	var upperlimit = storage * 0.2;
-	if (upperlimit < currentResources.wood || upperlimit < currentResources.iron ||
-		upperlimit < currentResources.stone)
-	{
-		doGetBuidingInfoAndBuild();
-	}
-	*/
-	doCuture();
+	doGetCultureInfoAndCulture();
 }
 
 function startFromLoader()
