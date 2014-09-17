@@ -17,7 +17,7 @@ function getTimeoutTime()
 	}
 	else
 	{
-		var requestNumber = alltowns.length * 2 + 1;
+		var requestNumber = alltowns.length * 2;
 		return 1000 * (famingtime - requestNumber * minRequestInterval);
 	}
 }

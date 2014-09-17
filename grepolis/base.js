@@ -8,7 +8,7 @@ var createGame = function() {
 
 	frame = document.createElement('iframe');
 	frame.width = 1024;
-	frame.height = 600;
+	frame.height = 800;
 	frame.id = "game";
 	frame.frameborder = '0';
 	frame.scrolling = 'no';

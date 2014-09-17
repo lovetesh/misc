@@ -91,7 +91,8 @@ function allowLoot(townId)
 				   "0010": 'y',
 				   "0011": 'y',
 				   '0012': 'y',
-				   '0013': 'y'
+				   '0013': 'y',
+				   '0014': 'y'
 	};
 	var type = typemap[name.substr(0, 4)];
 	if (type == null)

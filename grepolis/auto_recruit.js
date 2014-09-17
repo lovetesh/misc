@@ -25,9 +25,9 @@ function startRecruit()
 
 function typeFromName(name)
 {
-	var typemap = {"0001": 'n',
+	var typemap = {"0001": 'g',
 				   "0002": 'a',
-				   "0003": 'a',
+				   "0003": 'g',
 				   "0004": 'a',
 				   "0005": 'b',
 				   "0006": 'b',
@@ -36,8 +36,10 @@ function typeFromName(name)
 				   "0009": 'l',
 				   "0010": 'b',
 				   "0011": 'a',
-				   '0012': 'b',
-				   '0013': 'l'
+				   '0012': 'a',
+				   '0013': 'b',
+				   '0014': 'a',
+				   '0015': 'l'
 	};
 	var type = typemap[name.substr(0, 4)];
 	if (type == null)
@@ -73,6 +75,7 @@ function getAllowedRecruitNumber(data, i)
 	var resources = data.resources;
 	var consumes = frameWindow.GameData.units[data.units[i].id].resources;
 	var population = frameWindow.GameData.units[data.units[i].id].population;
+	var favor = frameWindow.GameData.units[data.units[i].id].favor;
 	if (consumes.iron != 0 && resources.iron / consumes.iron < allowed)
 	{
 		allowed = resources.iron / consumes.iron;
@@ -87,9 +90,15 @@ function getAllowedRecruitNumber(data, i)
 	}
 
 	console.log("unit = " + data.units[i].id + " allowed = " + allowed);
-	if (allowed >= 50 / population)
+
+	if (favor > 0 && allowed >= 1)
 	{
-		return parseInt(32 / population);
+		return 1;
+	}
+
+	if (allowed >= 70 / population)
+	{
+		return parseInt(50 / population);
 	}
 	return 0;
 }
@@ -186,6 +195,21 @@ function doTryRecruit(start, end, data, type)
 			l = ['bireme'];
 		}
 	}
+	else if (type == 'o')
+	{
+		if (resource_list[0][0] == "wood")
+		{
+			l = ['sword', 'hoplite', 'archer'];
+		}
+		else if (resource_list[0][0] == "stone")
+		{
+			l = ['sword', 'hoplite', 'archer'];
+		}
+		else 
+		{
+			l = ['hoplite', 'sword', 'archer'];
+		}
+	}
 	else if (type == 'l')
 	{
 		l = ['attack_ship'];
@@ -206,12 +230,16 @@ function doTryRecruit(start, end, data, type)
 	{
 		l = ['rider'];
 	}
+	else if (type == 'g')
+	{
+		l = ['manticore', 'griffin'];
+	}
 	console.log(l);
 	for (var id in l)
 	{
 		for (var i = start; i <= end; i++)
 		{
-			if (!data.units[i].dep)
+			if (data.units[i].dep == null || !data.units[i].dep)
 			{
 				continue;
 			}
@@ -231,7 +259,7 @@ function doTryRecruit(start, end, data, type)
 function tryRecruit(data, type)
 {
 	// barracks
-	if (data.orders.barracks.length < 7)
+	if (data.orders.barracks.length < 5)
 	{
 		if (doTryRecruit(0, 6, data, type))
 		{
@@ -239,7 +267,7 @@ function tryRecruit(data, type)
 		}
 	}
 
-	if (data.orders.docks.length < 7)
+	if (data.orders.docks.length < 5)
 	{
 		if (doTryRecruit(20, 21, data, type))
 		{
