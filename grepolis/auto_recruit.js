@@ -38,7 +38,7 @@ function typeFromName(name)
 				   "0011": 'a',
 				   '0012': 'a',
 				   '0013': 'b',
-				   '0014': 'a',
+				   '0014': 'l',
 				   '0015': 'l'
 	};
 	var type = typemap[name.substr(0, 4)];
@@ -234,7 +234,7 @@ function doTryRecruit(start, end, data, type)
 	{
 		l = ['manticore', 'griffin'];
 	}
-	console.log(l);
+	console.log("l = " + l);
 	for (var id in l)
 	{
 		for (var i = start; i <= end; i++)
@@ -261,7 +261,7 @@ function tryRecruit(data, type)
 	// barracks
 	if (data.orders.barracks.length < 5)
 	{
-		if (doTryRecruit(0, 6, data, type))
+		if (doTryRecruit(0, 17, data, type))
 		{
 			return;
 		}
@@ -296,6 +296,6 @@ function tryRecruitFromOverview(data, i)
 		    myAjaxPost('town_overviews', 'recruit_units', params, function(_data) {
 		    	console.log(unit.id + " has been recruited.");
 		    	doRecruitLoop(g_recruitTowns);
-	    	});
+	    	}, function(_data) {doRecruitLoop(g_recruitTowns);});
 	return true;
 }

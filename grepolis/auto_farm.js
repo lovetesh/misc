@@ -34,7 +34,8 @@ function getUserName()
 
 function recruitLoopEnded()
 {
-
+	console.log("recruitloop ended.");
+	doGetTradeInfoAndTrade();
 }
 
 function cultureLoopEnded()
@@ -43,6 +44,10 @@ function cultureLoopEnded()
 	doGetBuidingInfoAndBuild();
 }
 
+function tradeLoopEnded()
+{
+	console.log("tradeLoop ended.");
+}
 
 // Need add auto_cave and auto_trade
 
