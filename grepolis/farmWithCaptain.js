@@ -131,8 +131,6 @@ function doLootTown(cur_town_idx)
 	for (var i = 0; i < farm_town_list.length; i++)
 	{
 		var farm_town = farm_town_list[i];
-		// here must be a bug.
-		console.log("farm_town.loot = " + farm_town.loot);
 		if (farm_town.loot != null && farm_town.loot < (Date.now() / 1000))
 		{
 			townlist.push(farm_town.id);

@@ -17,7 +17,7 @@ function getTimeoutTime()
 	}
 	else
 	{
-		var requestNumber = alltowns.lengths * 2;
+		var requestNumber = alltowns.length * 2;
 		return 1000 * (famingtime + 10 - requestNumber * minRequestInterval);
 	}
 }
@@ -103,8 +103,34 @@ function stopLoop()
 	}
 }
 
+var checkTimeoutId = -1;
+var checkIdleTimeInterval = 1000 * 60 * 1;
+var maxIdleTime = 1000 * 60 * 5;	// 5 minutes.
+var lastStartTime = -1;
+
+function checkIdle()
+{
+	var curTime = new Date().getTime();
+	console.log("checkIdle, time = " + curTime);
+	if (lastStartTime != -1 && (curTime - lastStartTime) > (maxIdleTime + famingtime * 1000))
+	{
+		console.log("check idling, restart.");
+		if (timeoutid != -1)
+		{
+			clearTimeout(timeoutid);
+		}
+		doStartRun();
+	}
+	setTimeout(checkIdle, checkIdleTimeInterval);
+}
+
 function startLoop()
 {
+	if (checkTimeoutId != -1)
+	{
+		clearTimeout(checkTimeoutId);
+	}
+	setTimeout(checkIdle, checkIdleTimeInterval);
 	global_start = true;
 	if (timeoutid != -1)
 	{
@@ -115,6 +141,7 @@ function startLoop()
 
 function doStartRun()
 {
+	lastStartTime = new Date().getTime();
 	if (!global_start)
 	{
 		return;
