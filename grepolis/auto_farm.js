@@ -17,14 +17,15 @@ function getTimeoutTime()
 	}
 	else
 	{
-		var requestNumber = alltowns.length * 2;
-		return 1000 * (famingtime - requestNumber * minRequestInterval);
+		var requestNumber = alltowns.lengths * 2;
+		return 1000 * (famingtime + 10 - requestNumber * minRequestInterval);
 	}
 }
 
 function getRequestIntervalTime()
 {
-	return 1000 * (2 + parseInt(Math.random() * 2));
+	return 1000 * minRequestInterval;
+	//return 1000 * (minRequestInterval + parseInt(Math.random() * 2));
 }
 
 function getUserName()
