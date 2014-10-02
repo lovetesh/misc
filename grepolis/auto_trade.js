@@ -95,19 +95,59 @@ function doTradeLoop()
 	}
 }
 
+function tradeFromLimit(type, id)
+{
+	var num = 0;
+	if (type == 'stone')
+		num = 18000;
+	if (type == 'iron')
+	{
+		num = 15000;
+	}
+	if (type == 'wood')
+	{
+		num = 15000;
+	}
+	if (g_culture_data[id] != null && g_culture_data[id].party != null)
+	{
+		num = parseInt(num / 2);
+	}
+	return num;
+}
+
+function tradeToLimit(type, id)
+{
+	if (g_culture_data[id] != null && g_culture_data[id].party != null)
+	{
+		return 0;
+	}
+	var num = 0;
+	if (type == 'stone')
+		num = 18000;
+	if (type == 'iron')
+	{
+		num = 15000;
+	}
+	if (type == 'wood')
+	{
+		num = 15000;
+	}
+	return num;
+}
+
 function tryTrade()
 {
 	var data = g_tradeTowns[tradeTownIndex - 1];
 	console.log("try trade " + data.id + " res:" + data.res.wood + "," + data.res.stone + "," + data.res.iron);
-	if (trade('stone', 15000))
+	if (trade('stone', tradeFromLimit('stone', data.id)))
 	{
 		return;
 	}
-	if (trade('iron', 15000))
+	if (trade('iron', tradeFromLimit('iron', data.id)))
 	{
 		return;
 	}
-	if (trade('wood', 15000))
+	if (trade('wood', tradeFromLimit('wood', data.id)))
 	{
 		return;
 	}
@@ -118,12 +158,10 @@ function trade(type, limit)
 {
 	var id = tradeTownIndex - 1;
 	var data = g_tradeTowns[id];
-	console.log(type + " have " + data.res[type]);
 	if (data.res[type] <= limit)
 	{
 		return false;
 	}
-	console.log("enter here");
 	var extra = data.res[type] - limit;
 	if (extra >= 2500 && data.cap >= 2500)
 	{
@@ -134,6 +172,7 @@ function trade(type, limit)
 
 function tradeWithPriority(type, n, limit)
 {
+	console.log("tradeWithPriority: type:" + type + " limit:" + limit);
 	var res_num = 1000000;
 	var dest = -1;
 	for (var i = 0; i < tradeTownNum; i++)
@@ -141,6 +180,7 @@ function tradeWithPriority(type, n, limit)
 		if (i != tradeTownIndex - 1)
 		{
 			var t = g_tradeTowns[i];
+			limit = tradeToLimit(type, t.id);
 			var total = t.future_res[type] + n;
 			if (total < t.storage && total < res_num && t.future_res[type] < limit && t.storage > limit)
 			{

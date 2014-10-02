@@ -27,7 +27,7 @@ function typeFromName(name)
 {
 	var typemap = {"0001": 'g',
 				   "0002": 'a',
-				   "0003": 'g',
+				   "0003": 'a',
 				   "0004": 'a',
 				   "0005": 'b',
 				   "0006": 'b',
@@ -37,9 +37,18 @@ function typeFromName(name)
 				   "0010": 'b',
 				   "0011": 'a',
 				   '0012': 'a',
-				   '0013': 'b',
-				   '0014': 'l',
-				   '0015': 'l'
+				   '0013': 'l',
+				   '0014': 'o',
+				   '0015': 'b',
+				   '0016': 'b',
+				   '0017': 'b',
+				   '0018': 'o',
+				   '0019': 'b',
+				   '0020': 'o',
+				   '0021': 'l',
+				   '0022': 'l',
+				   '0023': 'l',
+				   '0024': 'l'
 	};
 	var type = typemap[name.substr(0, 4)];
 	if (type == null)
@@ -96,8 +105,12 @@ function getAllowedRecruitNumber(data, i)
 		return 1;
 	}
 
-	if (allowed >= 70 / population)
+	if (allowed >= 70 / population && allowed >= 1)
 	{
+		if (allowed < 2)
+		{
+			return 1;
+		}
 		return parseInt(50 / population);
 	}
 	return 0;
@@ -152,7 +165,7 @@ function doTryRecruit(start, end, data, type)
 	console.log("town name:" + townInfo.name + ",left pop:" + data.free_population + 
 		",totalDef:" + totalDef  + ",totalLight:" + totalLight + ",type:" + type);
 
-	if (data.free_population < 160)
+	if (data.free_population < 180)
 	{
 		return false;
 	}
@@ -171,7 +184,7 @@ function doTryRecruit(start, end, data, type)
 		{
 			l = ['hoplite', 'rider', 'slinger'];
 		}
-		if (totalLight < 80)
+		if (totalLight < 120)
 		{
 			l[3] = 'attack_ship';
 		}
@@ -209,6 +222,10 @@ function doTryRecruit(start, end, data, type)
 		{
 			l = ['hoplite', 'sword', 'archer'];
 		}
+	}
+	else if (type == 'c')
+	{
+		l = ['colonize_ship'];
 	}
 	else if (type == 'l')
 	{

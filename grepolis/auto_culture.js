@@ -12,15 +12,15 @@ function doGetCultureInfoAndCulture(building_data)
 		content = content.replace("CultureOverview.init(", "var culture_data = ");
 		eval(content);
 		g_culture_data = culture_data;
-		startCulture(culture_data);
+		startCulture(culture_data, 260);
 	});
 }
 
-function startCulture(culture_data)
+function startCulture(culture_data, id)
 {
-	if (culture_data[260] == null || culture_data[260].triumph == null)
+	if (culture_data[id] == null || culture_data[id].triumph == null)
 	{
-		doTriumph(260);
+		doTriumph(id);
 	}
 	doCelebrationAll();
 	cultureLoopEnded();

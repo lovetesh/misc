@@ -87,9 +87,9 @@ function tryBuildFromOverview(townId, building_data)
 						'temple' : 5, 
 						'hide' : 10, 
 						'wall' : 1, 
+						'stoner' : 20, 
 						'lumber' : 20,
 						'ironer' : 20, 
-						'stoner' : 20, 
 						'barracks' : 10
 					};
 	if (buildOneFromList(townId, buildingList, building_data))
@@ -106,11 +106,29 @@ function tryBuildFromOverview(townId, building_data)
 						'hide' : 10, 
 						'temple' : 15, 
 						'wall' : 1, 
+						'stoner' : 99,
 						'lumber' : 99,
 						'ironer' : 99, 
-						'stoner' : 99,
 						'market' : 20,  
 						'barracks' : 20
+					};
+	if (buildOneFromList(townId, buildingList, building_data))
+	{
+		return true;
+	}
+	buildingList = {'main' : 24,
+						'farm' : 99, 
+						'storage' : 99, 
+						'academy' : 99, 
+						'docks' : 99, 
+						'hide' : 10, 
+						'temple' : 99, 
+						'wall' : 1, 
+						'stoner' : 99,
+						'lumber' : 99,
+						'ironer' : 99, 
+						'market' : 20,  
+						'barracks' : 99
 					};
 	if (buildOneFromList(townId, buildingList, building_data))
 	{
