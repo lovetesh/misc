@@ -88,7 +88,7 @@ function handleNotification(n)
 {
 	if (n.type == frameWindow.NotificationType.INCOMING_ATTACK)
 	{
-		attackAudio.play();
+//		attackAudio.play();
 	}
 	else if (n.type == frameWindow.NotificationType.BOTCHECK)
 	{
