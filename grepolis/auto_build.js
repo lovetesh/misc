@@ -12,10 +12,12 @@ function doGetBuidingInfoAndBuild()
 		content = content.substr(content.indexOf("var town_data"));
 		content = content.substr(0, content.indexOf("BuildingOverview.init"));
 		eval(content);
+		g_buildingData = building_data;
 		startBuildLoop(building_data);
 		});
 }
 
+var g_buildingData;
 var buildTownIndex = 0;
 var buildTownNum = 0;
 var buildTowns = [];

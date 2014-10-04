@@ -29,25 +29,25 @@ function typeFromName(name)
 				   "0002": 'a',
 				   "0003": 'a',
 				   "0004": 'a',
-				   "0005": 'b',
-				   "0006": 'b',
-				   "0007": 'b',
-				   "0008": 'b',
+				   "0005": 'c',
+				   "0006": 'c',
+				   "0007": 'c',
+				   "0008": 'c',
 				   "0009": 'l',
-				   "0010": 'b',
+				   "0010": 'd',
 				   "0011": 'a',
 				   '0012': 'a',
 				   '0013': 'l',
 				   '0014': 'o',
-				   '0015': 'b',
-				   '0016': 'b',
-				   '0017': 'b',
-				   '0018': 'o',
+				   '0015': 'o',
+				   '0016': 'o',
+				   '0017': 'o',
+				   '0018': 'b',
 				   '0019': 'b',
-				   '0020': 'o',
-				   '0021': 'l',
-				   '0022': 'l',
-				   '0023': 'l',
+				   '0020': 'b',
+				   '0021': 'd',
+				   '0022': 'b',
+				   '0023': 'b',
 				   '0024': 'l'
 	};
 	var type = typemap[name.substr(0, 4)];
@@ -150,9 +150,7 @@ function doTryRecruit(start, end, data, type)
 		+ ((townInfo.unitsOuter().attack_ship != null) ? townInfo.unitsOuter().attack_ship : 0)
 		+ data.orders.docks.length * 3;
 
-	// (townInfo.outer_units().sword != null) ? townInfo.outer_units().sword : 0
-
-	townInfo.unitsOuter()
+	// (townInfo.outer_units().sword != null) ? townInfo.outer_units().sword : 0;
 
 	totalDef = townInfo.getLandUnits().sword
 		+ ((townInfo.unitsOuter().sword != null) ? townInfo.unitsOuter().sword : 0)
@@ -286,7 +284,7 @@ function tryRecruit(data, type)
 
 	if (data.orders.docks.length < 5)
 	{
-		if (doTryRecruit(20, 21, data, type))
+		if (doTryRecruit(19, 26, data, type))
 		{
 			return;
 		}

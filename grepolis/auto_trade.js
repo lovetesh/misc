@@ -41,11 +41,16 @@ function initTradeTownInfo()
 			var index = data.to.link.indexOf('>') + 1;
 			var name = data.to.link.substr(index, 4);
 			var id = findTownIdFromName(name);
-			var dest = findTradeTown(id);
-			console.log(dest);
-			dest.future_res.wood += data.res.wood;
-			dest.future_res.iron += data.res.iron;
-			dest.future_res.stone += data.res.stone;
+			if (id != null)
+			{
+				var dest = findTradeTown(id);
+				if (dest != null)
+				{
+					dest.future_res.wood += data.res.wood;
+					dest.future_res.iron += data.res.iron;
+					dest.future_res.stone += data.res.stone;
+				}
+			}
 		}
 	}
 }
@@ -95,6 +100,42 @@ function doTradeLoop()
 	}
 }
 
+function canCelebrate(id)
+{
+	var towndata = frameWindow.ITowns.towns[id];
+	if (typeFromName(towndata.name) == 'c')
+	{
+		return true;
+	}
+	if (g_culture_data == null)
+	{
+		return false;
+	}
+	if (g_culture_data[id] != null && g_culture_data[id].party != null)
+	{
+		return false;
+	}
+	// storage > 18000 and academy >= 30.
+	
+	if (towndata.getStorage() < 18000)
+	{
+		return false;
+	}
+	console.log(id);
+	if (towndata.getBuildings().attributes.academy < 30)
+	{
+		return false;
+	}
+
+	return true;
+}
+
+function canTrade(id)
+{
+	var towndata = frameWindow.ITowns.towns[id];
+	return towndata.getBuildings().attributes.market >= 10;
+}
+
 function tradeFromLimit(type, id)
 {
 	var num = 0;
@@ -108,7 +149,7 @@ function tradeFromLimit(type, id)
 	{
 		num = 15000;
 	}
-	if (g_culture_data[id] != null && g_culture_data[id].party != null)
+	if (!canCelebrate(id))
 	{
 		num = parseInt(num / 2);
 	}
@@ -117,7 +158,7 @@ function tradeFromLimit(type, id)
 
 function tradeToLimit(type, id)
 {
-	if (g_culture_data[id] != null && g_culture_data[id].party != null)
+	if (!canCelebrate(id))
 	{
 		return 0;
 	}
@@ -139,6 +180,10 @@ function tryTrade()
 {
 	var data = g_tradeTowns[tradeTownIndex - 1];
 	console.log("try trade " + data.id + " res:" + data.res.wood + "," + data.res.stone + "," + data.res.iron);
+	if (!canTrade(data.id))
+	{
+		doTradeLoop();
+	}
 	if (trade('stone', tradeFromLimit('stone', data.id)))
 	{
 		return;

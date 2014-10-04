@@ -157,6 +157,7 @@ function doStartRun()
 	var hasCaptain = document.getElementById("hasCaptain").checked;
 	if (hasCaptain)
 	{
+		captainSortFarmTown();
 		doRun();
 	}
 	else

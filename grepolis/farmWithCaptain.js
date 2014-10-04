@@ -1,4 +1,19 @@
 
+function sortByLootTime(a, b)
+{
+	return a.lootTime - b.lootTime;
+}
+
+function captainSortFarmTown()
+{
+	if (alltowns == null)
+	{
+		return;
+	}
+	// sort towns by time.
+	alltowns.sort(sortByLootTime);
+}
+
 function doRun()
 {
 	if (!global_start)
@@ -70,6 +85,7 @@ function doGetAllTowns()
 		for (var i = 0; i < alltowns.length; i++)
 		{
 			alltowns[i].valid = true;
+			alltowns[i].lootTime = 0;
 		}
 		doRun();
 		});
@@ -155,6 +171,9 @@ function doLootTown(cur_town_idx)
         claim_factor: loot ? 'double' : 'normal',
         current_town_id: towninfo.id
 	};
+
+	alltowns[i].lootTime = new Date().getTime();
+
 	myAjaxPost('farm_town_overviews', 'claim_loads', params, function(_data) {
 		console.log(_data);
 		if (_data.error != null)
