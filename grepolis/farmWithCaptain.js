@@ -93,45 +93,6 @@ function doGetAllTowns()
 
 function allowLoot(townId)
 {
-	var towndata = frameWindow.ITowns.towns[townId];
-	var name = towndata.name;
-	var typemap = {"0001": 'y',
-				   "0002": 'y',
-				   "0003": 'y',
-				   "0004": 'y',
-				   "0005": 'y',
-				   "0006": 'y',
-				   "0007": 'y',
-				   "0008": 'y',
-				   "0009": 'y',
-				   "0010": 'y',
-				   "0011": 'y',
-				   '0012': 'y',
-				   '0013': 'y',
-				   '0014': 'y',
-				   '0015': 'y',
-				   '0016': 'y',
-				   '0017': 'y',
-				   '0018': 'y',
-				   '0019': 'y',
-				   '0020': 'y',
-				   '0021': 'y',
-				   '0022': 'y',
-				   '0023': 'y',
-				   '0024': 'y',
-				   '0025': 'y',
-				   '0026': 'y',
-				   '0027': 'y',
-				   '0028': 'y',
-				   '0029': 'y',
-				   '0030': 'y',
-				   '00' : 'y',
-	};
-	var type = typemap[name.substr(0, 2)];
-	if (type == null)
-	{
-		return false;
-	}
 	return true;
 }
 

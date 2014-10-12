@@ -169,7 +169,6 @@ function doStartRun()
 function lootLoopEnded()
 {
 	// switch to other action list.	
-	doCheckStatusAndDoSomething();
 	timeoutid = setTimeout(doStartRun, getTimeoutTime());
 	console.log("successful one turn.");
 	// switch to build.
