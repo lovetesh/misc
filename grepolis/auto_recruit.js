@@ -27,12 +27,12 @@ function typeFromName(name)
 {
 	var typemap = {"0001": 'g',
 				   "0002": 'a',
-				   "0003": 'a',
+				   "0003": 'l',
 				   "0004": 'a',
-				   "0005": 'c',
-				   "0006": 'c',
-				   "0007": 'c',
-				   "0008": 'c',
+				   "0005": 'b',
+				   "0006": 'b',
+				   "0007": 'b',
+				   "0008": 'd',
 				   "0009": 'l',
 				   "0010": 'd',
 				   "0011": 'a',
@@ -45,10 +45,11 @@ function typeFromName(name)
 				   '0018': 'b',
 				   '0019': 'b',
 				   '0020': 'b',
-				   '0021': 'd',
+				   '0021': 'gc',
 				   '0022': 'b',
-				   '0023': 'b',
-				   '0024': 'l'
+				   '0023': 'l',
+				   '0024': 'b',
+				   '0025': 'a',
 	};
 	var type = typemap[name.substr(0, 4)];
 	if (type == null)
@@ -199,9 +200,9 @@ function doTryRecruit(start, end, data, type)
 		}
 		else 
 		{
-			l = ['hoplite', 'sword', 'archer', 'bireme'];
+			l = ['hoplite', 'archer', 'sword', 'bireme'];
 		}
-		if (totalDef > 700)
+		if (totalDef > 1000)
 		{
 			l = ['bireme'];
 		}
@@ -224,6 +225,10 @@ function doTryRecruit(start, end, data, type)
 	else if (type == 'c')
 	{
 		l = ['colonize_ship'];
+	}
+	else if (type == 'gc')
+	{
+		l = ['manticore', 'griffin', 'colonize_ship'];
 	}
 	else if (type == 'l')
 	{

@@ -120,8 +120,14 @@ function allowLoot(townId)
 				   '0023': 'y',
 				   '0024': 'y',
 				   '0025': 'y',
+				   '0026': 'y',
+				   '0027': 'y',
+				   '0028': 'y',
+				   '0029': 'y',
+				   '0030': 'y',
+				   '00' : 'y',
 	};
-	var type = typemap[name.substr(0, 4)];
+	var type = typemap[name.substr(0, 2)];
 	if (type == null)
 	{
 		return false;
@@ -172,7 +178,7 @@ function doLootTown(cur_town_idx)
         current_town_id: towninfo.id
 	};
 
-	alltowns[i].lootTime = new Date().getTime();
+	//alltowns[cur_town_idx].lootTime = new Date().getTime();
 
 	myAjaxPost('farm_town_overviews', 'claim_loads', params, function(_data) {
 		console.log(_data);

@@ -45,6 +45,6 @@ function doCelebrationAll()
 		"celebration_type": "party"
 	}
     myAjaxPost('town_overviews', 'start_all_celebrations', params, function(_data) {
-		console.log(id + "start all celebrations");
+		console.log("start all celebrations");
 	})
 }

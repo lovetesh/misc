@@ -107,6 +107,10 @@ function canCelebrate(id)
 	{
 		return true;
 	}
+	if (typeFromName(towndata.name) == 'gc')
+	{
+		return true;
+	}
 	if (g_culture_data == null)
 	{
 		return false;
