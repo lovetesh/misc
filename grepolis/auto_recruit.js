@@ -29,9 +29,9 @@ function typeFromName(name)
 				   "0002": 'a',
 				   "0003": 'l',
 				   "0004": 'a',
-				   "0005": 'b',
-				   "0006": 'b',
-				   "0007": 'b',
+				   "0005": 'c',
+				   "0006": 'c',
+				   "0007": 'c',
 				   "0008": 'd',
 				   "0009": 'l',
 				   "0010": 'd',
@@ -50,6 +50,12 @@ function typeFromName(name)
 				   '0023': 'l',
 				   '0024': 'b',
 				   '0025': 'a',
+				   '0026': 'a',
+				   '0027': 'a',
+				   '0028': 'l',
+				   '0029': 'h',
+				   '0030': 'l',
+				   '0031': 'l',
 	};
 	var type = typemap[name.substr(0, 4)];
 	if (type == null)
@@ -153,6 +159,12 @@ function doTryRecruit(start, end, data, type)
 
 	// (townInfo.outer_units().sword != null) ? townInfo.outer_units().sword : 0;
 
+	var swordNum = townInfo.getLandUnits().sword
+		+ ((townInfo.unitsOuter().sword != null) ? townInfo.unitsOuter().sword : 0);
+	var archerNum = townInfo.getLandUnits().archer
+		+ ((townInfo.unitsOuter().archer != null) ? townInfo.unitsOuter().archer : 0);
+	var moreSword = swordNum > archerNum;
+
 	totalDef = townInfo.getLandUnits().sword
 		+ ((townInfo.unitsOuter().sword != null) ? townInfo.unitsOuter().sword : 0)
 		+ townInfo.getLandUnits().hoplite
@@ -192,7 +204,10 @@ function doTryRecruit(start, end, data, type)
 	{
 		if (resource_list[0][0] == "wood")
 		{
-			l = ['sword', 'hoplite', 'archer', 'bireme'];
+			if (moreSword)
+				l = ['sword', 'hoplite', 'archer', 'bireme'];
+			else
+				l = ['archer', 'sword', 'hoplite', 'bireme'];
 		}
 		else if (resource_list[0][0] == "stone")
 		{
@@ -211,7 +226,10 @@ function doTryRecruit(start, end, data, type)
 	{
 		if (resource_list[0][0] == "wood")
 		{
-			l = ['sword', 'hoplite', 'archer'];
+			if (moreSword)
+				l = ['sword', 'hoplite', 'archer'];
+			else
+				l = ['archer', 'sword', 'hoplite'];
 		}
 		else if (resource_list[0][0] == "stone")
 		{
@@ -240,7 +258,7 @@ function doTryRecruit(start, end, data, type)
 	}
 	else if (type == 'h')
 	{
-		l = ['hoplite'];
+		l = ['hoplite', 'chariot'];
 	}
 	else if (type == 's')
 	{
@@ -279,17 +297,17 @@ function doTryRecruit(start, end, data, type)
 function tryRecruit(data, type)
 {
 	// barracks
-	if (data.orders.barracks.length < 5)
+	if (data.orders.docks.length < 5)
 	{
-		if (doTryRecruit(0, 17, data, type))
+		if (doTryRecruit(19, 26, data, type))
 		{
 			return;
 		}
 	}
-
-	if (data.orders.docks.length < 5)
+	
+	if (data.orders.barracks.length < 5)
 	{
-		if (doTryRecruit(19, 26, data, type))
+		if (doTryRecruit(0, 17, data, type))
 		{
 			return;
 		}

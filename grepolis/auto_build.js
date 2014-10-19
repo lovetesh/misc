@@ -163,7 +163,7 @@ function buildOneFromList(townId, buildingList, building_data)
 		    myAjaxPost('town_overviews', 'build_building', params, function(_data) {
 		    	console.log(key + " has been built.");
 		    	doBuildLoop(building_data);
-	    	});
+	    	}, function(_data) {doBuildLoop(building_data);});
 	    	return true;
 		}
 	}

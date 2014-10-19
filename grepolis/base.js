@@ -92,6 +92,7 @@ function handleNotification(n)
 	}
 	else if (n.type == frameWindow.NotificationType.BOTCHECK)
 	{
+		stopLoop();
 		botcheckAudio.play();
 	}
 }

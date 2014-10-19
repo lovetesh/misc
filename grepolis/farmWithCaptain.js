@@ -166,6 +166,13 @@ function doLootTown(cur_town_idx)
 		return;
 	}
 
+	if (towninfo.loads_data[famingtime] == null)
+	{
+		console.log("current famingtime is not supported.");
+		doRun();
+		return;
+	}
+
 	if (towninfo.loads_data[famingtime].mood == 0)
 	{
 		loot = true;

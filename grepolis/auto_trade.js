@@ -37,7 +37,6 @@ function initTradeTownInfo()
 		var data = g_movements[p];
 		if (data.to != null && data.to.link != null)
 		{
-			console.log(data.to.link)
 			var index = data.to.link.indexOf('>') + 1;
 			var name = data.to.link.substr(index, 4);
 			var id = findTownIdFromName(name);
@@ -125,7 +124,6 @@ function canCelebrate(id)
 	{
 		return false;
 	}
-	console.log(id);
 	if (towndata.getBuildings().attributes.academy < 30)
 	{
 		return false;
