@@ -136,49 +136,31 @@ function swapH(rl, a, b)
 	rl[b] = t;
 }
 
+function getUnitNumber(townInfo, unit)
+{
+	return townInfo.getLandUnits()[unit]
+		+ ((townInfo.unitsOuter()[unit] != null) ? townInfo.unitsOuter()[unit] : 0);
+}
+
 function doTryRecruit(start, end, data, type)
 {
 	l = [];
-
-	resource_list = [['wood', data.resources.wood], ['stone', data.resources.stone], ['iron', data.resources.iron]];
-	if (resource_list[0][1] < resource_list[1][1])
-	{
-		swapH(resource_list, 0, 1);
-	}
-	if (resource_list[0][1] < resource_list[2][1])
-	{
-		swapH(resource_list, 0, 2);
-	}
-	if (resource_list[1][1] < resource_list[2][1])
-	{
-		swapH(resource_list, 1, 2);
-	}
 
 	var totalDef = 0;
 	var totalLight = 0;
 
 	var townInfo = frameWindow.ITowns.towns[data.id];
 
-	totalLight = ((townInfo.units().attack_ship != null) ? townInfo.units().attack_ship : 0)
-		+ ((townInfo.unitsOuter().attack_ship != null) ? townInfo.unitsOuter().attack_ship : 0)
-		+ data.orders.docks.length * 3;
+	totalLight = getUnitNumber(townInfo, "attack_ship")
+		+ data.orders.docks.length * 5;
 
-	var swordNum = townInfo.getLandUnits().sword
-		+ ((townInfo.unitsOuter().sword != null) ? townInfo.unitsOuter().sword : 0);
-	var archerNum = townInfo.getLandUnits().archer
-		+ ((townInfo.unitsOuter().archer != null) ? townInfo.unitsOuter().archer : 0);
-	var moreSword = swordNum > archerNum;
+	var moreSword = getUnitNumber(townInfo, "sword") > getUnitNumber(townInfo, "archer");
 
-	totalDef = townInfo.getLandUnits().sword
-		+ ((townInfo.unitsOuter().sword != null) ? townInfo.unitsOuter().sword : 0)
-		+ townInfo.getLandUnits().hoplite
-		+ ((townInfo.unitsOuter().hoplite != null) ? townInfo.unitsOuter().hoplite : 0)
-		+ townInfo.getLandUnits().archer
-		+ ((townInfo.unitsOuter().archer != null) ? townInfo.unitsOuter().archer : 0)
-		+ data.orders.barracks.length * 30;
+	totalDef = getUnitNumber(townInfo, "sword") + getUnitNumber(townInfo, "archer") + getUnitNumber(townInfo, "hoplite")
+		+ data.orders.barracks.length * 50;
 
 	console.log("town name:" + townInfo.name + ",left pop:" + data.free_population + 
-		",totalDef:" + totalDef  + ",totalLight:" + totalLight + ",type:" + type);
+		",totalDef:" + totalDef  + ",resources:" + data.resources + ",type:" + type);
 
 	if (data.free_population < 180)
 	{
@@ -187,111 +169,119 @@ function doTryRecruit(start, end, data, type)
 
 	if (type == 'a')
 	{
-		if (resource_list[0][0] == "wood")
-		{
-			l = ['rider', 'slinger', 'hoplite'];
-		}
-		else if (resource_list[0][0] == "stone")
-		{
-			l = ['slinger', 'rider', 'hoplite'];
-		}
-		else 
-		{
-			l = ['hoplite', 'rider', 'slinger'];
-		}
-		if (totalLight < 80)
-		{
-			l[3] = 'attack_ship';
-		}
+		l = {
+			'rider' : 10000,
+			'slinger' : 10000,
+			'hoplite' : 10000,
+			'attack_ship' : 70,
+		};
 	}
 	else if (type == 'aa')
 	{
-		if (resource_list[0][0] == "wood")
-		{
-			l = ['rider', 'slinger', 'hoplite', 'chariot'];
-		}
-		else if (resource_list[0][0] == "stone")
-		{
-			l = ['slinger', 'rider', 'hoplite', 'chariot'];
-		}
-		else 
-		{
-			l = ['hoplite', 'rider', 'slinger', 'chariot'];
-		}
+		l = {
+			'rider' : 10000,
+			'slinger' : 10000,
+			'hoplite' : 10000,
+			'attack_ship' : 0,
+		};
 	}
 	else if (type == 'd')
 	{
-		if (resource_list[0][0] == "wood")
-		{
-			if (moreSword)
-				l = ['archer', 'sword', 'hoplite', 'bireme'];
-			else
-				l = ['sword', 'hoplite', 'archer', 'bireme'];
-		}
-		else if (resource_list[0][0] == "stone")
-		{
-			l = ['bireme', 'sword', 'hoplite', 'archer'];
-		}
-		else 
-		{
-			l = ['hoplite', 'archer', 'sword', 'bireme'];
-		}
 		if (totalDef > 1000)
 		{
-			l = ['bireme'];
+			l = {
+				'bireme' : 200
+			};
+		}
+		else if (moreSword)
+		{
+			l = {
+			'hoplite' : 10000,
+			'archer' : 10000,
+			'bireme' : 200
+			};
+		}
+		else
+		{
+			l = {
+			'hoplite' : 10000,
+			'sword' : 10000,
+			'bireme' : 200
+			};
 		}
 	}
 	else if (type == 'o')
 	{
-		if (resource_list[0][0] == "wood")
+		if (moreSword)
 		{
-			if (moreSword)
-				l = ['archer', 'sword', 'hoplite'];
-			else
-				l = ['sword', 'hoplite', 'archer'];
+			l = {
+			'hoplite' : 10000,
+			'archer' : 10000
+			};
 		}
-		else if (resource_list[0][0] == "stone")
+		else
 		{
-			l = ['sword', 'hoplite', 'archer'];
-		}
-		else 
-		{
-			l = ['hoplite', 'sword', 'archer'];
+			l = {
+			'hoplite' : 10000,
+			'sword' : 10000
+			};
 		}
 	}
 	else if (type == 'c')
 	{
-		l = ['colonize_ship'];
+		l = {
+			'colonize_ship' : 5
+		};
 	}
 	else if (type == 'gc')
 	{
-		l = ['manticore', 'griffin', 'colonize_ship'];
+		l = {
+			'manticore' : 10000,
+			'griffin' : 10000,
+			'harpy' : 10000,
+			'colonize_ship' : 10000
+		};
 	}
 	else if (type == 'l')
 	{
-		l = ['attack_ship'];
+		l = {
+			'attack_ship' : 5000
+		};
 	}
 	else if (type == 'b')
 	{
-		l = ['bireme'];
+		l = {
+			'bireme' : 5000
+		};
 	}
 	else if (type == 'h')
 	{
-		l = ['hoplite', 'chariot'];
+		l = {
+			'hoplite' : 10000,
+			'chariot' : 10000
+		};
 	}
 	else if (type == 's')
 	{
-		l = ['slinger'];
+		l = {
+			'slinger' : 5000
+		};
 	}
 	else if (type == 'r')
 	{
-		l = ['rider'];
+		l = {
+			'rider' : 5000
+		};
 	}
 	else if (type == 'g')
 	{
-		l = ['manticore', 'griffin', 'harpy'];
+		l = {
+			'manticore' : 10000,
+			'griffin' : 10000,
+			'harpy' : 10000
+		};
 	}
-	console.log("l = " + l);
+	console.log(l);
 	for (var id in l)
 	{
 		for (var i = start; i <= end; i++)
@@ -300,7 +290,7 @@ function doTryRecruit(start, end, data, type)
 			{
 				continue;
 			}
-			if (data.units[i].id == l[id])
+			if (data.units[i].id == id && getUnitNumber(townInfo, id) < l[id])
 			{
 				if (tryRecruitFromOverview(data, i))
 				{
@@ -316,7 +306,7 @@ function doTryRecruit(start, end, data, type)
 function tryRecruit(data, type)
 {
 	// barracks
-	if (data.orders.docks.length < 5)
+	if (data.orders.docks.length < 3)
 	{
 		if (doTryRecruit(19, 26, data, type))
 		{
@@ -324,7 +314,7 @@ function tryRecruit(data, type)
 		}
 	}
 	
-	if (data.orders.barracks.length < 5)
+	if (data.orders.barracks.length < 3)
 	{
 		if (doTryRecruit(0, 17, data, type))
 		{
