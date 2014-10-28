@@ -1,7 +1,11 @@
 
 function sortByLootTime(a, b)
 {
-	return a.lootTime - b.lootTime;
+	if (a.island_x * a.island_y == b.island_x * b.island_y)
+	{
+		return a.lootTime - b.lootTime;
+	}
+	return a.island_x * a.island_y - b.island_x * b.island_y;
 }
 
 function captainSortFarmTown()
@@ -185,7 +189,7 @@ function doLootTown(cur_town_idx)
         current_town_id: towninfo.id
 	};
 
-	//alltowns[cur_town_idx].lootTime = new Date().getTime();
+	alltowns[cur_town_idx].lootTime = new Date().getTime();
 
 	myAjaxPost('farm_town_overviews', 'claim_loads', params, function(_data) {
 		console.log(_data);

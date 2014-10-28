@@ -26,12 +26,12 @@ function startRecruit()
 function typeFromName(name)
 {
 	var typemap = {"0001": 'g',
-				   "0002": 'a',
+				   "0002": 'g',
 				   "0003": 'l',
 				   "0004": 'a',
-				   "0005": 'c',
-				   "0006": 'c',
-				   "0007": 'c',
+				   "0005": 'g',
+				   "0006": 'd',
+				   "0007": 'd',
 				   "0008": 'd',
 				   "0009": 'l',
 				   "0010": 'd',
@@ -45,17 +45,23 @@ function typeFromName(name)
 				   '0018': 'b',
 				   '0019': 'b',
 				   '0020': 'b',
-				   '0021': 'gc',
+				   '0021': 'g',
 				   '0022': 'b',
 				   '0023': 'l',
-				   '0024': 'b',
+				   '0024': 'aa',
 				   '0025': 'a',
-				   '0026': 'a',
-				   '0027': 'a',
+				   '0026': 'l',
+				   '0027': 'o',
 				   '0028': 'l',
 				   '0029': 'h',
 				   '0030': 'l',
-				   '0031': 'l',
+				   '0031': 'o',
+				   '0032': 'a',
+				   '0033': 'a',
+				   '0034': 'o',
+				   '0035': 'o',
+				   '0036': 'o',
+				   '0037': 'o'
 	};
 	var type = typemap[name.substr(0, 4)];
 	if (type == null)
@@ -157,8 +163,6 @@ function doTryRecruit(start, end, data, type)
 		+ ((townInfo.unitsOuter().attack_ship != null) ? townInfo.unitsOuter().attack_ship : 0)
 		+ data.orders.docks.length * 3;
 
-	// (townInfo.outer_units().sword != null) ? townInfo.outer_units().sword : 0;
-
 	var swordNum = townInfo.getLandUnits().sword
 		+ ((townInfo.unitsOuter().sword != null) ? townInfo.unitsOuter().sword : 0);
 	var archerNum = townInfo.getLandUnits().archer
@@ -195,9 +199,24 @@ function doTryRecruit(start, end, data, type)
 		{
 			l = ['hoplite', 'rider', 'slinger'];
 		}
-		if (totalLight < 120)
+		if (totalLight < 80)
 		{
 			l[3] = 'attack_ship';
+		}
+	}
+	else if (type == 'aa')
+	{
+		if (resource_list[0][0] == "wood")
+		{
+			l = ['rider', 'slinger', 'hoplite', 'chariot'];
+		}
+		else if (resource_list[0][0] == "stone")
+		{
+			l = ['slinger', 'rider', 'hoplite', 'chariot'];
+		}
+		else 
+		{
+			l = ['hoplite', 'rider', 'slinger', 'chariot'];
 		}
 	}
 	else if (type == 'd')
@@ -205,9 +224,9 @@ function doTryRecruit(start, end, data, type)
 		if (resource_list[0][0] == "wood")
 		{
 			if (moreSword)
-				l = ['sword', 'hoplite', 'archer', 'bireme'];
-			else
 				l = ['archer', 'sword', 'hoplite', 'bireme'];
+			else
+				l = ['sword', 'hoplite', 'archer', 'bireme'];
 		}
 		else if (resource_list[0][0] == "stone")
 		{
@@ -227,9 +246,9 @@ function doTryRecruit(start, end, data, type)
 		if (resource_list[0][0] == "wood")
 		{
 			if (moreSword)
-				l = ['sword', 'hoplite', 'archer'];
-			else
 				l = ['archer', 'sword', 'hoplite'];
+			else
+				l = ['sword', 'hoplite', 'archer'];
 		}
 		else if (resource_list[0][0] == "stone")
 		{
@@ -270,7 +289,7 @@ function doTryRecruit(start, end, data, type)
 	}
 	else if (type == 'g')
 	{
-		l = ['manticore', 'griffin'];
+		l = ['manticore', 'griffin', 'harpy'];
 	}
 	console.log("l = " + l);
 	for (var id in l)
