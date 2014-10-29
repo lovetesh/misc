@@ -48,7 +48,7 @@ function typeFromName(name)
 				   '0021': 'g',
 				   '0022': 'b',
 				   '0023': 'l',
-				   '0024': 'aa',
+				   '0024': 'd',
 				   '0025': 'a',
 				   '0026': 'l',
 				   '0027': 'o',
@@ -56,8 +56,8 @@ function typeFromName(name)
 				   '0029': 'h',
 				   '0030': 'l',
 				   '0031': 'o',
-				   '0032': 'a',
-				   '0033': 'a',
+				   '0032': 'd',
+				   '0033': 'd',
 				   '0034': 'o',
 				   '0035': 'o',
 				   '0036': 'o',
@@ -138,7 +138,7 @@ function swapH(rl, a, b)
 
 function getUnitNumber(townInfo, unit)
 {
-	return townInfo.getLandUnits()[unit]
+	return ((townInfo.units()[unit] != null) ? townInfo.units()[unit] : 0)
 		+ ((townInfo.unitsOuter()[unit] != null) ? townInfo.unitsOuter()[unit] : 0);
 }
 
@@ -159,10 +159,10 @@ function doTryRecruit(start, end, data, type)
 	totalDef = getUnitNumber(townInfo, "sword") + getUnitNumber(townInfo, "archer") + getUnitNumber(townInfo, "hoplite")
 		+ data.orders.barracks.length * 50;
 
-	console.log("town name:" + townInfo.name + ",left pop:" + data.free_population + 
-		",totalDef:" + totalDef  + ",resources:" + data.resources + ",type:" + type);
+//	console.log("town name:" + townInfo.name + ",left pop:" + data.free_population + 
+//		",totalDef:" + totalDef  + ",resources:" + data.resources + ",type:" + type);
 
-	if (data.free_population < 180)
+	if (data.free_population < 200)
 	{
 		return false;
 	}
@@ -174,6 +174,7 @@ function doTryRecruit(start, end, data, type)
 			'slinger' : 10000,
 			'hoplite' : 10000,
 			'attack_ship' : 70,
+			'small_transporter' : 70
 		};
 	}
 	else if (type == 'aa')
@@ -190,7 +191,8 @@ function doTryRecruit(start, end, data, type)
 		if (totalDef > 1000)
 		{
 			l = {
-				'bireme' : 200
+				'bireme' : 200,
+				'small_transporter' : 50
 			};
 		}
 		else if (moreSword)
@@ -198,7 +200,8 @@ function doTryRecruit(start, end, data, type)
 			l = {
 			'hoplite' : 10000,
 			'archer' : 10000,
-			'bireme' : 200
+			'bireme' : 200,
+			'small_transporter' : 50
 			};
 		}
 		else
@@ -206,7 +209,8 @@ function doTryRecruit(start, end, data, type)
 			l = {
 			'hoplite' : 10000,
 			'sword' : 10000,
-			'bireme' : 200
+			'bireme' : 200,
+			'small_transporter' : 50
 			};
 		}
 	}
@@ -216,14 +220,16 @@ function doTryRecruit(start, end, data, type)
 		{
 			l = {
 			'hoplite' : 10000,
-			'archer' : 10000
+			'archer' : 10000,
+			'small_transporter' : 120
 			};
 		}
 		else
 		{
 			l = {
 			'hoplite' : 10000,
-			'sword' : 10000
+			'sword' : 10000,
+			'small_transporter' : 120
 			};
 		}
 	}
@@ -258,19 +264,25 @@ function doTryRecruit(start, end, data, type)
 	{
 		l = {
 			'hoplite' : 10000,
-			'chariot' : 10000
+			'chariot' : 10000,
+			'small_transporter' : 100,
+			'attack_ship' : 40
 		};
 	}
 	else if (type == 's')
 	{
 		l = {
-			'slinger' : 5000
+			'slinger' : 5000,
+			'small_transporter' : 100,
+			'attack_ship' : 40
 		};
 	}
 	else if (type == 'r')
 	{
 		l = {
-			'rider' : 5000
+			'rider' : 5000,
+			'small_transporter' : 100,
+			'attack_ship' : 40
 		};
 	}
 	else if (type == 'g')
@@ -281,7 +293,6 @@ function doTryRecruit(start, end, data, type)
 			'harpy' : 10000
 		};
 	}
-	console.log(l);
 	for (var id in l)
 	{
 		for (var i = start; i <= end; i++)
@@ -335,7 +346,6 @@ function tryRecruitFromOverview(data, i)
 	var towns = {};
 	towns[data.id] = {};
 	towns[data.id][unit.id] = num;
-	console.log(towns);
 	var params = {
 			"town_id":data.id,
 			"towns": towns
