@@ -317,7 +317,7 @@ function doTryRecruit(start, end, data, type)
 function tryRecruit(data, type)
 {
 	// barracks
-	if (data.orders.docks.length < 3)
+	if (data.orders.docks.length < 4)
 	{
 		if (doTryRecruit(19, 26, data, type))
 		{
@@ -325,7 +325,7 @@ function tryRecruit(data, type)
 		}
 	}
 	
-	if (data.orders.barracks.length < 3)
+	if (data.orders.barracks.length < 4)
 	{
 		if (doTryRecruit(0, 17, data, type))
 		{
